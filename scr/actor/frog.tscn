@@ -1,0 +1,176 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scr/actor/frog.gd" type="Script" id=1]
+[ext_resource path="res://asset/frog/tongue_tip.png" type="Texture" id=2]
+[ext_resource path="res://asset/light/light_texture.png" type="Texture" id=3]
+[ext_resource path="res://asset/frog/spr_frog_sheet.png" type="Texture" id=4]
+[ext_resource path="res://asset/frog/tongue.png" type="Texture" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "idle"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "tongue"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "tongue"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachine" id=3]
+states/idle/node = SubResource( 8 )
+states/idle/position = Vector2( 407.25, 141.312 )
+states/tongue/node = SubResource( 9 )
+states/tongue/position = Vector2( 623.5, 142.016 )
+transitions = [ "idle", "tongue", SubResource( 10 ), "tongue", "idle", SubResource( 11 ) ]
+start_node = "idle"
+graph_offset = Vector2( -87, 18 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[node name="frog" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gridSize = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 8, -8 )
+shape = SubResource( 1 )
+
+[node name="VisualAchor" type="Node2D" parent="."]
+position = Vector2( 8, -8 )
+
+[node name="Sprite" type="Sprite" parent="VisualAchor"]
+position = Vector2( -11, -9 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualAchor/Sprite"]
+anims/RESET = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/tongue = SubResource( 7 )
+
+[node name="AnimationTree" type="AnimationTree" parent="VisualAchor/Sprite"]
+tree_root = SubResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="MoveCd" type="Timer" parent="."]
+
+[node name="WallCheckDown" type="RayCast2D" parent="."]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 0, 8.5 )
+collision_mask = 2
+
+[node name="WallCheckUp" type="RayCast2D" parent="."]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 0, -8.5 )
+collision_mask = 2
+
+[node name="WallCheckRight" type="RayCast2D" parent="."]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 8.5, 0 )
+collision_mask = 2
+
+[node name="WallCheckLeft" type="RayCast2D" parent="."]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( -8.5, 0 )
+collision_mask = 2
+
+[node name="TongueArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TongueArea"]
+position = Vector2( 8, -8 )
+shape = SubResource( 2 )
+
+[node name="TongueTip" type="Sprite" parent="TongueArea"]
+position = Vector2( 8, -8 )
+z_index = 2
+texture = ExtResource( 2 )
+
+[node name="TongueCheckDown" type="RayCast2D" parent="TongueArea"]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 0, 8.5 )
+collision_mask = 2
+
+[node name="TongueLine" type="Line2D" parent="."]
+z_index = 1
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 4.0
+default_color = Color( 0.980392, 0.470588, 0.65098, 1 )
+texture = ExtResource( 5 )
+texture_mode = 2
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 8, -8 )
+texture = ExtResource( 3 )
+texture_scale = 0.27
+color = Color( 1, 0.972549, 0.592157, 1 )
+energy = 1.23
+mode = 2
