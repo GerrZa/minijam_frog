@@ -11,15 +11,22 @@ config_version=4
 [application]
 
 config/name="minijam_frog"
-run/main_scene="res://scr/level/test_world.tscn"
+run/main_scene="res://scr/level/level1.tscn"
+boot_splash/image="."
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://scr/tool/global.gd"
+MusicPlayer="*res://scr/tool/musicPlayer.tscn"
 
 [display]
 
 window/size/width=224
 window/size/height=224
-window/size/test_width=896
-window/size/test_height=896
+window/size/test_width=1120
+window/size/test_height=1120
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/y2mate.com - 2053  Carnoustie Path.mp3-5af90f34b3730e26827eefd57da07247.mp3str"
+
+[deps]
+
+source_file="res://asset/audio/song/y2mate.com - 2053  Carnoustie Path.mp3"
+dest_files=[ "res://.import/y2mate.com - 2053  Carnoustie Path.mp3-5af90f34b3730e26827eefd57da07247.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

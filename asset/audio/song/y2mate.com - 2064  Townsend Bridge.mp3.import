@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/y2mate.com - 2064  Townsend Bridge.mp3-696d5a40846f6674437e80278d332cec.mp3str"
+
+[deps]
+
+source_file="res://asset/audio/song/y2mate.com - 2064  Townsend Bridge.mp3"
+dest_files=[ "res://.import/y2mate.com - 2064  Townsend Bridge.mp3-696d5a40846f6674437e80278d332cec.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

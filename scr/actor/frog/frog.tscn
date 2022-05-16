@@ -1,12 +1,28 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://scr/actor/frog.gd" type="Script" id=1]
+[ext_resource path="res://scr/actor/frog/frog.gd" type="Script" id=1]
 [ext_resource path="res://asset/frog/tongue_tip.png" type="Texture" id=2]
-[ext_resource path="res://asset/light/light_texture.png" type="Texture" id=3]
-[ext_resource path="res://asset/frog/spr_frog_sheet.png" type="Texture" id=4]
+[ext_resource path="res://asset/frog/spr_frog_sheet.png" type="Texture" id=3]
+[ext_resource path="res://asset/light/light_texture.png" type="Texture" id=4]
 [ext_resource path="res://asset/frog/tongue.png" type="Texture" id=5]
+[ext_resource path="res://asset/audio/sfx/fireflyconsumed_sfx.wav" type="AudioStream" id=6]
+
+[sub_resource type="ParticlesMaterial" id=12]
+lifetime_randomness = 0.78
+flag_disable_z = true
+spread = 135.84
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 93.46
+initial_velocity_random = 0.41
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+scale_random = 0.32
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
 [sub_resource type="Animation" id=5]
@@ -22,6 +38,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../..:moving")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -56,6 +84,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 1, 2, 3, 4, 5 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("../..:moving")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "idle"
@@ -78,9 +118,6 @@ graph_offset = Vector2( -87, 18 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=4]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 8 )
-
 [node name="frog" type="KinematicBody2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -88,29 +125,25 @@ __meta__ = {
 }
 gridSize = 16
 
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 8, -8 )
+emitting = false
+lifetime = 0.39
+one_shot = true
+explosiveness = 0.84
+randomness = 0.44
+process_material = SubResource( 12 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -20.628
+
+[node name="consumeSfxPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.628
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, -8 )
 shape = SubResource( 1 )
-
-[node name="VisualAchor" type="Node2D" parent="."]
-position = Vector2( 8, -8 )
-
-[node name="Sprite" type="Sprite" parent="VisualAchor"]
-position = Vector2( -11, -9 )
-texture = ExtResource( 4 )
-centered = false
-hframes = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualAchor/Sprite"]
-anims/RESET = SubResource( 5 )
-anims/idle = SubResource( 6 )
-anims/tongue = SubResource( 7 )
-
-[node name="AnimationTree" type="AnimationTree" parent="VisualAchor/Sprite"]
-tree_root = SubResource( 3 )
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -159,6 +192,24 @@ enabled = true
 cast_to = Vector2( 0, 8.5 )
 collision_mask = 2
 
+[node name="TongueCheckUp" type="RayCast2D" parent="TongueArea"]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 0, -8.5 )
+collision_mask = 2
+
+[node name="TongueCheckRight" type="RayCast2D" parent="TongueArea"]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( 8.5, 0 )
+collision_mask = 2
+
+[node name="TongueCheckLeft" type="RayCast2D" parent="TongueArea"]
+position = Vector2( 8, -8 )
+enabled = true
+cast_to = Vector2( -8.5, 0 )
+collision_mask = 2
+
 [node name="TongueLine" type="Line2D" parent="."]
 z_index = 1
 points = PoolVector2Array( 0, 0, 0, 0 )
@@ -169,8 +220,28 @@ texture_mode = 2
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 8, -8 )
-texture = ExtResource( 3 )
-texture_scale = 0.27
+texture = ExtResource( 4 )
+texture_scale = 0.14
 color = Color( 1, 0.972549, 0.592157, 1 )
-energy = 1.23
+energy = 1.14
 mode = 2
+
+[node name="VisualAchor" type="Node2D" parent="."]
+position = Vector2( 8, -8 )
+
+[node name="Sprite" type="Sprite" parent="VisualAchor"]
+position = Vector2( -11, -9 )
+texture = ExtResource( 3 )
+centered = false
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualAchor/Sprite"]
+anims/RESET = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/tongue = SubResource( 7 )
+
+[node name="AnimationTree" type="AnimationTree" parent="VisualAchor/Sprite"]
+tree_root = SubResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 4 )

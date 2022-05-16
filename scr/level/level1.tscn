@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scr/actor/frog/frog.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scr/level/level_script.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scr/actor/firefly/firefly.tscn" type="PackedScene" id=6]
 [ext_resource path="res://asset/ui/song_on-off2.png" type="Texture" id=7]
 [ext_resource path="res://asset/ui/song_on-off1.png" type="Texture" id=8]
+[ext_resource path="res://asset/font/mysteryFontDynamicFontregular.tres" type="DynamicFont" id=9]
 
 [node name="world" type="Node2D"]
 script = ExtResource( 2 )
@@ -24,13 +25,6 @@ hframes = 4
 frame = 3
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer"]
-margin_right = 16.0
-margin_bottom = 16.0
-toggle_mode = true
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 7 )
-
-[node name="TextureButton2" type="TextureButton" parent="CanvasLayer"]
 margin_right = 16.0
 margin_bottom = 16.0
 toggle_mode = true
@@ -59,3 +53,14 @@ color = Color( 0.164706, 0.227451, 0.262745, 1 )
 
 [node name="firefly" parent="firefly_group" instance=ExtResource( 6 )]
 position = Vector2( 128, 128 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 48.0
+margin_top = 48.0
+margin_right = 176.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 9 )
+text = "use WASD to move
+eat all the fireflies to win
+and do not let the light out"
+align = 1

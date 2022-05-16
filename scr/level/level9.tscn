@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://asset/font/mysteryFontDynamicFontregular.tres" type="DynamicFont" id=1]
+[ext_resource path="res://asset/font/Mystery Font.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scr/level/level9.gd" type="Script" id=3]
+[ext_resource path="res://asset/ui/frogendcredit.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+resource_local_to_scene = true
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = 1
+font_data = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="labelAnchor" type="Node2D" parent="."]
+position = Vector2( 0, 224 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="labelAnchor"]
+margin_right = 224.0
+margin_bottom = 256.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center][u]THANKS FOR PLAYING![/u]
+
+[u]A game by trizG_ (Thana)[/u]
+
+[u]Programming[/u]
+trizG_
+
+[u]Art[/u]
+trizG_
+(using SUNSHINE 35 PALETTE by mysunnyrose)
+
+[u]Sfx[/u]
+trizG_
+(using Bleeper by Cedric stoquer)
+
+[u]Music[/u]
+FREE MUSIC MAISON
+
+[u]Song used[/u]
+FREE MUSIC MAISON - Ward Ridgeway
+FREE MUSIC MAISON - 2064  Townsend Bridge
+FREE MUSIC MAISON - 2094  Underwood Road
+FREE MUSIC MAISON - 2053  Carnoustie Path
+
+[u]made with Godot engine[/u][/center]"
+text = "THANKS FOR PLAYING!
+
+A game by trizG_ (Thana)
+
+Programming
+trizG_
+
+Art
+trizG_
+(using SUNSHINE 35 PALETTE by mysunnyrose)
+
+Sfx
+trizG_
+(using Bleeper by Cedric stoquer)
+
+Music
+FREE MUSIC MAISON
+
+Song used
+FREE MUSIC MAISON - Ward Ridgeway
+FREE MUSIC MAISON - 2064  Townsend Bridge
+FREE MUSIC MAISON - 2094  Underwood Road
+FREE MUSIC MAISON - 2053  Carnoustie Path
+
+made with Godot engine"
+scroll_active = false
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="labelAnchor"]
+position = Vector2( 112, 576 )
+scale = Vector2( 1.6, 0.8 )
+
+[node name="Frogendcredit" type="Sprite" parent="labelAnchor"]
+position = Vector2( 161, 40 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Label" type="Label" parent="."]
+margin_right = 224.0
+margin_bottom = 112.0
+custom_fonts/font = ExtResource( 1 )
+text = "Press space to play again"
+align = 1
+valign = 2
+
+[connection signal="screen_entered" from="labelAnchor/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]

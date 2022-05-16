@@ -30,15 +30,8 @@ toggle_mode = true
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 7 )
 
-[node name="TextureButton2" type="TextureButton" parent="CanvasLayer"]
-margin_right = 16.0
-margin_bottom = 16.0
-toggle_mode = true
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 7 )
-
 [node name="frog" parent="." instance=ExtResource( 1 )]
-position = Vector2( 80, 128 )
+position = Vector2( 96, 128 )
 
 [node name="bg" type="Sprite" parent="."]
 z_index = -2
@@ -58,4 +51,13 @@ color = Color( 0.164706, 0.227451, 0.262745, 1 )
 [node name="firefly_group" type="Node2D" parent="."]
 
 [node name="firefly" parent="firefly_group" instance=ExtResource( 6 )]
-position = Vector2( 128, 128 )
+position = Vector2( 112, 128 )
+
+[node name="firefly2" parent="firefly_group" instance=ExtResource( 6 )]
+position = Vector2( 112, 112 )
+
+[node name="firefly3" parent="firefly_group" instance=ExtResource( 6 )]
+position = Vector2( 112, 80 )
+
+[node name="firefly4" parent="firefly_group" instance=ExtResource( 6 )]
+position = Vector2( 160, 112 )

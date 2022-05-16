@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/y2mate.com - 2094  Underwood Road.mp3-57bb3dac13b77c5d61c0b7d9ff1d07fd.mp3str"
+
+[deps]
+
+source_file="res://asset/audio/song/y2mate.com - 2094  Underwood Road.mp3"
+dest_files=[ "res://.import/y2mate.com - 2094  Underwood Road.mp3-57bb3dac13b77c5d61c0b7d9ff1d07fd.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
